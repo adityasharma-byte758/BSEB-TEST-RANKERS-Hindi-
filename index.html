@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Test Ranking — BSEB 12th Hindi Model Paper (50 MCQ)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Noto Sans Devanagari', 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    .palette-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .palette-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Student Name Entry Screen -->
+  <section id="startScreen" class="min-h-screen flex items-center justify-center p-4 bg-slate-50">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-md max-w-md w-full p-6 sm:p-8">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-11 h-11 rounded-xl bg-blue-900 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
+          ATR
+        </div>
+        <div>
+          <div class="text-sm font-bold tracking-wide text-blue-900">Aditya Test Ranking</div>
+          <div class="text-xs text-slate-500">By Aditya Kumar</div>
+        </div>
+      </div>
+
+      <h1 class="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">BSEB 12th Hindi मॉडल पेपर टेस्ट</h1>
+      <p class="text-sm text-slate-600 mt-1.5">व्याकरण (25) + दिगंत भाग-2 साहित्य (25) • बिहार बोर्ड पैटर्न</p>
+
+      <div class="grid grid-cols-3 gap-2 my-5 text-center">
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+          <div class="text-sm font-bold text-slate-900">50</div>
+          <div class="text-xs text-slate-500">प्रश्न</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+          <div class="text-sm font-bold text-slate-900">50 मिनट</div>
+          <div class="text-xs text-slate-500">समय</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+          <div class="text-sm font-bold text-emerald-700">फ्री</div>
+          <div class="text-xs text-slate-500">तुरंत रिज़ल्ट</div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <label for="studentNameInput" class="block text-sm font-semibold text-slate-800">अपना पूरा नाम लिखें (Student Name) *</label>
+        <input id="studentNameInput" type="text" placeholder="जैसे: राहुल कुमार" autocomplete="name"
+          class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm sm:text-base text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-800 focus:border-blue-800" />
+        <p id="nameError" class="hidden text-xs font-medium text-rose-600">कृपया टेस्ट शुरू करने से पहले अपना नाम दर्ज करें।</p>
+      </div>
+
+      <button id="startTestBtn" type="button"
+        class="mt-5 w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold text-sm sm:text-base py-3 rounded-xl shadow-sm transition cursor-pointer">
+        टेस्ट शुरू करें →
+      </button>
+    </div>
+  </section>
+
+  <!-- Sticky Top Header -->
+  <header id="testHeader" class="hidden sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-blue-900 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
+          ATR
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-base font-bold text-slate-900 truncate">Aditya Test Ranking • मॉडल पेपर</h1>
+          <p id="headerStudentMeta" class="text-xs text-slate-500 truncate">By Aditya Kumar • 50 प्रश्न</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Timer -->
+        <div id="timerBox" class="flex items-center gap-1.5 bg-slate-100 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 tabular-nums">
+          <svg class="w-4 h-4 text-blue-800 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span id="timerDisplay">50:00</span>
+          <button id="timerToggleBtn" type="button" class="ml-1 text-xs font-medium text-blue-700 hover:text-blue-900 underline" title="Pause/Resume">रोकें</button>
+        </div>
+
+        <!-- Submit / Retake Button -->
+        <button id="topActionBtn" type="button" class="bg-blue-900 hover:bg-blue-800 text-white text-xs sm:text-sm font-semibold px-3.5 py-2 rounded-lg shadow-sm transition cursor-pointer">
+          सबमिट करें
+        </button>
+      </div>
+    </div>
+
+    <!-- Progress & Controls Bar -->
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 pb-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-2">
+      <div class="flex items-center gap-1.5 overflow-x-auto">
+        <button type="button" data-section="all" class="sec-btn px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-900 text-white transition cursor-pointer whitespace-nowrap">सभी (50)</button>
+        <button type="button" data-section="vyakaran" class="sec-btn px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer whitespace-nowrap">व्याकरण (25)</button>
+        <button type="button" data-section="gadya" class="sec-btn px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer whitespace-nowrap">गद्य खंड (11)</button>
+        <button type="button" data-section="kavya" class="sec-btn px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer whitespace-nowrap">काव्य खंड (11)</button>
+        <button type="button" data-section="pratipurti" class="sec-btn px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer whitespace-nowrap">प्रतिपूर्ति (3)</button>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs">
+        <span id="progressText" class="font-semibold text-slate-700 tabular-nums">हल किए: 0 / 50</span>
+        <div id="viewToggleGroup" class="inline-flex rounded-lg bg-slate-100 p-0.5 border border-slate-200">
+          <button id="modeSingleBtn" type="button" class="px-2 py-1 rounded-md text-xs font-semibold bg-white text-blue-900 shadow-sm cursor-pointer">एक-एक प्रश्न</button>
+          <button id="modeListBtn" type="button" class="px-2 py-1 rounded-md text-xs font-semibold text-slate-600 hover:text-slate-900 cursor-pointer">पूरी सूची</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="mainContent" class="hidden flex-1 max-w-5xl w-full mx-auto px-3 sm:px-6 py-5">
+
+    <!-- Result Summary Panel -->
+    <section id="resultSection" class="hidden mb-6 space-y-4">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200">Aditya Test Ranking • टेस्ट परिणाम</span>
+              <span id="scoreStudentNameBadge" class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-900 border border-amber-200"></span>
+            </div>
+            <h2 id="scoreHeadline" class="text-2xl sm:text-3xl font-bold text-slate-900 tabular-nums">0 / 50 अंक</h2>
+            <p id="scoreSubtext" class="text-sm text-slate-600 mt-1">सटीकता: 0% • समय: 00:00</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button id="retakeBtn" type="button" class="bg-blue-900 hover:bg-blue-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm transition cursor-pointer">
+              फिर से टेस्ट दें
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Stat Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+            <div class="text-xs font-medium text-emerald-700">सही उत्तर</div>
+            <div id="statCorrect" class="text-xl font-bold text-emerald-900 tabular-nums mt-0.5">0</div>
+          </div>
+          <div class="bg-rose-50 border border-rose-200 rounded-xl p-3">
+            <div class="text-xs font-medium text-rose-700">गलत उत्तर</div>
+            <div id="statWrong" class="text-xl font-bold text-rose-900 tabular-nums mt-0.5">0</div>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+            <div class="text-xs font-medium text-slate-600">छोड़े गए</div>
+            <div id="statSkipped" class="text-xl font-bold text-slate-800 tabular-nums mt-0.5">0</div>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
+            <div class="text-xs font-medium text-amber-800">प्रतिशत (Score %)</div>
+            <div id="statPercent" class="text-xl font-bold text-amber-900 tabular-nums mt-0.5">0%</div>
+          </div>
+        </div>
+
+        <!-- Section Breakdown -->
+        <div class="mt-5 pt-4 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center justify-between">
+            <span class="font-semibold text-slate-700">व्याकरण (25)</span>
+            <span id="secScoreVyakaran" class="font-bold text-blue-900 tabular-nums">0 / 25</span>
+          </div>
+          <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center justify-between">
+            <span class="font-semibold text-slate-700">गद्य खंड (11)</span>
+            <span id="secScoreGadya" class="font-bold text-blue-900 tabular-nums">0 / 11</span>
+          </div>
+          <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center justify-between">
+            <span class="font-semibold text-slate-700">काव्य खंड (11)</span>
+            <span id="secScoreKavya" class="font-bold text-blue-900 tabular-nums">0 / 11</span>
+          </div>
+          <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center justify-between">
+            <span class="font-semibold text-slate-700">प्रतिपूर्ति (3)</span>
+            <span id="secScorePrati" class="font-bold text-blue-900 tabular-nums">0 / 3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review Filter Tabs -->
+      <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3 rounded-xl border border-slate-200">
+        <span class="text-xs sm:text-sm font-semibold text-slate-700">उत्तर समीक्षा (Answer Review):</span>
+        <div class="flex flex-wrap gap-1.5">
+          <button type="button" data-rfilter="all" class="rfilter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-blue-900 text-white cursor-pointer">सभी</button>
+          <button type="button" data-rfilter="correct" class="rfilter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer">सही</button>
+          <button type="button" data-rfilter="wrong" class="rfilter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer">गलत</button>
+          <button type="button" data-rfilter="skipped" class="rfilter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer">छोड़े गए</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Single Question View + Palette -->
+    <div id="singleViewContainer" class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <div class="lg:col-span-8 flex flex-col">
+        <div id="singleQuestionCard" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 flex-1"></div>
+
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
+          <button id="prevBtn" type="button" class="px-4 py-2 rounded-xl border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 text-sm font-semibold disabled:opacity-40 cursor-pointer">
+            ← पिछला प्रश्न
+          </button>
+          <button id="clearChoiceBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:text-slate-800 hover:bg-slate-100 cursor-pointer">
+            विकल्प हटाएँ
+          </button>
+          <button id="nextBtn" type="button" class="px-4 py-2 rounded-xl bg-blue-900 hover:bg-blue-800 text-white text-sm font-semibold disabled:opacity-40 cursor-pointer">
+            अगला प्रश्न →
+          </button>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-4">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sticky top-32">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-slate-800">प्रश्न पैलेट (Palette)</h3>
+            <span id="paletteCountLabel" class="text-xs text-slate-500 tabular-nums">0/50 हल</span>
+          </div>
+          <div id="paletteGrid" class="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-1.5 max-h-72 overflow-y-auto palette-scroll pr-1"></div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-600 inline-block"></span> हल किया</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-slate-200 inline-block"></span> बाकी</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded ring-2 ring-blue-700 bg-white inline-block"></span> वर्तमान</span>
+          </div>
+          <button id="sidebarSubmitBtn" type="button" class="mt-4 w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-sm transition cursor-pointer">
+            टेस्ट सबमिट करें (Submit)
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- List View / Result Review Container -->
+    <div id="listViewContainer" class="hidden space-y-4"></div>
+
+    <footer class="mt-8 pb-4 text-center text-xs text-slate-500">
+      © Aditya Test Ranking • Created by Aditya Kumar
+    </footer>
+  </main>
+
+  <!-- In-Page Confirmation Modal -->
+  <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200">
+      <h3 class="text-lg font-bold text-slate-900">क्या आप टेस्ट सबमिट करना चाहते हैं?</h3>
+      <p id="modalSummaryText" class="text-sm text-slate-600 mt-2">आपने 50 में से 0 प्रश्नों के उत्तर दिए हैं।</p>
+      <div class="mt-5 flex items-center justify-end gap-2.5">
+        <button id="modalCancelBtn" type="button" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-sm font-semibold cursor-pointer">
+          वापस जाएँ
+        </button>
+        <button id="modalConfirmBtn" type="button" class="px-4 py-2 rounded-xl bg-blue-900 hover:bg-blue-800 text-white text-sm font-semibold cursor-pointer">
+          हाँ, सबमिट करें
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const QUESTIONS = [
+      // --- व्याकरण (Q1 - Q25) ---
+      {
+        id: 1, section: 'vyakaran', chapter: 'कारक',
+        question: '‘पेड़ से पत्ता गिरता है’ — यह किस कारक का उदाहरण है?',
+        options: ['करण कारक', 'अपादान कारक', 'संप्रदान कारक', 'अधिकरण कारक'],
+        answerIndex: 1,
+        explanation: 'जहाँ किसी वस्तु के अलग होने (जुदाई) का बोध हो, वहाँ अपादान कारक होता है।'
+      },
+      {
+        id: 2, section: 'vyakaran', chapter: 'कारक',
+        question: '‘कबूतर छत पर बैठा है’ — किस कारक का उदाहरण है?',
+        options: ['अधिकरण कारक', 'कर्म कारक', 'संबंध कारक', 'कर्ता कारक'],
+        answerIndex: 0,
+        explanation: '‘में’ और ‘पर’ अधिकरण कारक के विभक्ति चिह्न हैं।'
+      },
+      {
+        id: 3, section: 'vyakaran', chapter: 'संधि',
+        question: 'संधि के कितने भेद होते हैं?',
+        options: ['दो', 'तीन', 'चार', 'पाँच'],
+        answerIndex: 1,
+        explanation: 'संधि के तीन भेद हैं: स्वर संधि, व्यंजन संधि और विसर्ग संधि।'
+      },
+      {
+        id: 4, section: 'vyakaran', chapter: 'संधि',
+        question: 'निम्नलिखित में से कौन विसर्ग संधि का उदाहरण है?',
+        options: ['विद्यालय', 'जगन्नाथ', 'निश्चल', 'महोदय'],
+        answerIndex: 2,
+        explanation: 'निश्चल = निः + चल, यह विसर्ग संधि का उदाहरण है।'
+      },
+      {
+        id: 5, section: 'vyakaran', chapter: 'समास',
+        question: '‘कमलनयन’ शब्द में कौन-सा समास है?',
+        options: ['द्वंद्व समास', 'कर्मधारय समास', 'द्विगु समास', 'अव्ययीभाव समास'],
+        answerIndex: 1,
+        explanation: '‘कमल के समान नयन’ में उपमेय-उपमान संबंध होने से कर्मधारय समास है।'
+      },
+      {
+        id: 6, section: 'vyakaran', chapter: 'समास',
+        question: '‘पंचवटी’ शब्द में कौन-सा समास है?',
+        options: ['द्विगु समास', 'तत्पुरुष समास', 'कर्मधारय समास', 'अव्ययीभाव समास'],
+        answerIndex: 0,
+        explanation: 'पहला पद संख्यावाची (‘पंच’) होने के कारण ‘पंचवटी’ द्विगु समास है।'
+      },
+      {
+        id: 7, section: 'vyakaran', chapter: 'उपसर्ग',
+        question: '‘अभिलाषा’ शब्द में कौन-सा उपसर्ग है?',
+        options: ['अ', 'अभ', 'अभि', 'लाषा'],
+        answerIndex: 2,
+        explanation: '‘अभिलाषा’ शब्द ‘अभि’ उपसर्ग और ‘लाषा’ मूल शब्द से बना है।'
+      },
+      {
+        id: 8, section: 'vyakaran', chapter: 'उपसर्ग',
+        question: '‘विज्ञान’ शब्द में कौन-सा उपसर्ग है?',
+        options: ['विज', 'वि', 'ज्ञान', 'अन'],
+        answerIndex: 1,
+        explanation: '‘विज्ञान’ शब्द ‘वि’ उपसर्ग + ‘ज्ञान’ से बना है।'
+      },
+      {
+        id: 9, section: 'vyakaran', chapter: 'उपसर्ग',
+        question: '‘पुरातन’ शब्द में कौन-सा उपसर्ग है?',
+        options: ['पुर', 'पूर', 'पुरा', 'पु'],
+        answerIndex: 2,
+        explanation: '‘पुरातन’ में ‘पुरा’ उपसर्ग लगा है।'
+      },
+      {
+        id: 10, section: 'vyakaran', chapter: 'प्रत्यय',
+        question: '‘ममेरा’ शब्द में कौन-सा प्रत्यय है?',
+        options: ['रा', 'एरा', 'आ', 'मेरा'],
+        answerIndex: 1,
+        explanation: '‘मामा’ शब्द में ‘एरा’ प्रत्यय जुड़ने से ‘ममेरा’ बनता है।'
+      },
+      {
+        id: 11, section: 'vyakaran', chapter: 'प्रत्यय',
+        question: '‘कर्तव्य’ शब्द में कौन-सा प्रत्यय है?',
+        options: ['तव्य', 'व्य', 'य', 'अव्य'],
+        answerIndex: 0,
+        explanation: '‘कृ’ धातु में ‘तव्य’ प्रत्यय लगने से ‘कर्तव्य’ बनता है।'
+      },
+      {
+        id: 12, section: 'vyakaran', chapter: 'संज्ञा',
+        question: '‘अच्छाई’ शब्द कौन-सी संज्ञा है?',
+        options: ['व्यक्तिवाचक', 'जातिवाचक', 'भाववाचक', 'समूहवाचक'],
+        answerIndex: 2,
+        explanation: 'गुण, दोष या भाव का बोध कराने वाले शब्द भाववाचक संज्ञा होते हैं।'
+      },
+      {
+        id: 13, section: 'vyakaran', chapter: 'संज्ञा',
+        question: '‘लेखक’ शब्द कौन-सी संज्ञा है?',
+        options: ['जातिवाचक', 'व्यक्तिवाचक', 'भाववाचक', 'द्रव्यवाचक'],
+        answerIndex: 0,
+        explanation: '‘लेखक’ संपूर्ण लेखक वर्ग का बोध कराता है, इसलिए यह जातिवाचक संज्ञा है।'
+      },
+      {
+        id: 14, section: 'vyakaran', chapter: 'विशेषण',
+        question: '‘राष्ट्र’ शब्द का विशेषण क्या होगा?',
+        options: ['राष्ट्रता', 'राष्ट्रीय', 'राष्ट्रीयता', 'राष्ट्रवादी'],
+        answerIndex: 1,
+        explanation: '‘राष्ट्र’ संज्ञा शब्द से बना विशेषण ‘राष्ट्रीय’ होता है।'
+      },
+      {
+        id: 15, section: 'vyakaran', chapter: 'विशेषण',
+        question: '‘पर्वत’ शब्द का विशेषण क्या होगा?',
+        options: ['पर्वती', 'पर्वतीय', 'पर्वता', 'पहाड़ी'],
+        answerIndex: 1,
+        explanation: '‘पर्वत’ का शुद्ध विशेषण रूप ‘पर्वतीय’ है।'
+      },
+      {
+        id: 16, section: 'vyakaran', chapter: 'पर्यायवाची',
+        question: '‘कमल’ का पर्यायवाची शब्द इनमें से कौन है?',
+        options: ['पंकज', 'पावक', 'दिनकर', 'अनल'],
+        answerIndex: 0,
+        explanation: '‘पंकज’, ‘जलज’, ‘सरोज’ आदि कमल के पर्यायवाची शब्द हैं।'
+      },
+      {
+        id: 17, section: 'vyakaran', chapter: 'पर्यायवाची',
+        question: '‘अश्व’ का पर्यायवाची शब्द क्या है?',
+        options: ['गज', 'तुरंग', 'मृग', 'सारंग'],
+        answerIndex: 1,
+        explanation: '‘तुरंग’, ‘घोटक’, ‘हय’ आदि अश्व (घोड़ा) के पर्यायवाची हैं।'
+      },
+      {
+        id: 18, section: 'vyakaran', chapter: 'विलोम शब्द',
+        question: '‘संध्या’ शब्द का विलोम क्या होगा?',
+        options: ['रात्रि', 'प्रातः', 'दोपहर', 'अँधेरा'],
+        answerIndex: 1,
+        explanation: 'संध्या (शाम) का विलोम ‘प्रातः’ (सुबह) होता है।'
+      },
+      {
+        id: 19, section: 'vyakaran', chapter: 'विलोम शब्द',
+        question: '‘उन्नति’ का विलोम शब्द क्या होगा?',
+        options: ['प्रगति', 'अवनति', 'विकास', 'उत्थान'],
+        answerIndex: 1,
+        explanation: '‘उन्नति’ का विलोम ‘अवनति’ होता है।'
+      },
+      {
+        id: 20, section: 'vyakaran', chapter: 'विलोम शब्द',
+        question: '‘तिमिर’ शब्द का विलोम क्या होगा?',
+        options: ['अंधकार', 'आलोक', 'रात्रि', 'काला'],
+        answerIndex: 1,
+        explanation: '‘तिमिर’ (अंधकार) का विलोम ‘आलोक’ (प्रकाश) होता है।'
+      },
+      {
+        id: 21, section: 'vyakaran', chapter: 'विलोम शब्द',
+        question: '‘कठोर’ शब्द का विलोम क्या होगा?',
+        options: ['सख्त', 'कोमल', 'मजबूत', 'कड़ा'],
+        answerIndex: 1,
+        explanation: '‘कठोर’ का विलोम ‘कोमल’ होता है।'
+      },
+      {
+        id: 22, section: 'vyakaran', chapter: 'उच्चारण स्थान',
+        question: '‘ब’ वर्ण का उच्चारण स्थान क्या है?',
+        options: ['कंठ', 'तालु', 'ओष्ठ', 'दंत'],
+        answerIndex: 2,
+        explanation: 'प, फ, ब, भ, म (पवर्ग) का उच्चारण स्थान ओष्ठ होता है।'
+      },
+      {
+        id: 23, section: 'vyakaran', chapter: 'काल',
+        question: '‘नरेश जाएगा’ — यह किस काल का उदाहरण है?',
+        options: ['भूतकाल', 'वर्तमान काल', 'भविष्यत् काल', 'संदिग्ध काल'],
+        answerIndex: 2,
+        explanation: 'क्रिया के आने वाले समय में होने का बोध हो, तो वहाँ भविष्यत् काल होता है।'
+      },
+      {
+        id: 24, section: 'vyakaran', chapter: 'मुहावरे',
+        question: '‘दाँत गिनना’ मुहावरे का सही अर्थ क्या है?',
+        options: ['उम्र का पता लगाना', 'दाँत साफ करना', 'गिनती सीखना', 'भयभीत होना'],
+        answerIndex: 0,
+        explanation: '‘दाँत गिनना’ मुहावरे का अर्थ ‘उम्र का पता लगाना’ होता है।'
+      },
+      {
+        id: 25, section: 'vyakaran', chapter: 'शब्द भेद',
+        question: 'वैसे शब्द जो संस्कृत और प्राकृत से विकृत होकर हिंदी में आए हैं, क्या कहलाते हैं?',
+        options: ['तत्सम', 'तद्भव', 'देशज', 'विदेशज'],
+        answerIndex: 1,
+        explanation: 'संस्कृत के वे शब्द जो रूप बदलकर हिंदी में आए हैं, तद्भव कहलाते हैं।'
+      },
+
+      // --- गद्य खंड (Q26 - Q36) ---
+      {
+        id: 26, section: 'gadya', chapter: 'रोज',
+        question: '‘गैंग्रीन’ का उल्लेख किस कहानी में किया गया है?',
+        options: ['रोज', 'शिक्षा', 'तिरिछ', 'उसने कहा था'],
+        answerIndex: 0,
+        explanation: 'अज्ञेय की कहानी ‘रोज’ में मालती के पति महेश्वर पहाड़ी गाँव में गैंग्रीन का ऑपरेशन करते हैं।'
+      },
+      {
+        id: 27, section: 'gadya', chapter: 'बातचीत',
+        question: '‘बोलने से ही मनुष्य के रूप का साक्षात्कार होता है’ — यह कथन किस पाठ से संबंधित है?',
+        options: ['रोज', 'बातचीत', 'जूठन', 'तिरिछ'],
+        answerIndex: 1,
+        explanation: 'बालकृष्ण भट्ट के निबंध ‘बातचीत’ में बेन जॉनसन का यह कथन उद्धृत है।'
+      },
+      {
+        id: 28, section: 'gadya', chapter: 'ओ सदानीरा',
+        question: '‘गंडक नदी का जल तो सदियों से चंचल रहा है’ — यह पंक्ति किस पाठ से है?',
+        options: ['ओ सदानीरा', 'अर्धनारीश्वर', 'संपूर्ण क्रांति', 'सिपाही की माँ'],
+        answerIndex: 0,
+        explanation: 'यह पंक्ति जगदीशचंद्र माथुर के यात्रा-वृत्त/निबंध ‘ओ सदानीरा’ से ली गई है।'
+      },
+      {
+        id: 29, section: 'gadya', chapter: 'एक लेख और एक पत्र',
+        question: '‘एक लेख और एक पत्र’ में भगत सिंह ने किसको पत्र लिखा था?',
+        options: ['बटुकेश्वर दत्त को', 'सुखदेव को', 'चंद्रशेखर आज़ाद को', 'राजगुरु को'],
+        answerIndex: 1,
+        explanation: 'भगत सिंह ने यह ऐतिहासिक पत्र अपने क्रांतिकारी साथी सुखदेव को लिखा था।'
+      },
+      {
+        id: 30, section: 'gadya', chapter: 'जूठन',
+        question: '‘दलित साहित्य का सौंदर्यशास्त्र’ किस विधा की रचना है?',
+        options: ['कहानी', 'आलोचना', 'कविता', 'नाटक'],
+        answerIndex: 1,
+        explanation: 'ओमप्रकाश वाल्मीकि द्वारा रचित ‘दलित साहित्य का सौंदर्यशास्त्र’ आलोचना विधा की पुस्तक है।'
+      },
+      {
+        id: 31, section: 'gadya', chapter: 'सिपाही की माँ',
+        question: '‘सिपाही की माँ’ एकांकी में मुन्नी और मानक की माँ का नाम क्या है?',
+        options: ['बिशनी', 'रमनी', 'लगनी', 'जगनी'],
+        answerIndex: 0,
+        explanation: 'मुन्नी और मानक की माँ का नाम बिशनी है।'
+      },
+      {
+        id: 32, section: 'gadya', chapter: 'ओ सदानीरा',
+        question: '‘ओ सदानीरा’ पाठ के अनुसार नंदनगढ़ का स्तूप कितने फुट ऊँचा है?',
+        options: ['50 फुट', '83 फुट', '100 फुट', '65 फुट'],
+        answerIndex: 1,
+        explanation: '‘ओ सदानीरा’ पाठ में नंदनगढ़ के स्तूप की ऊँचाई 83 फुट बताई गई है।'
+      },
+      {
+        id: 33, section: 'gadya', chapter: 'उसने कहा था',
+        question: '‘उसने कहा था’ कहानी कितने भागों में बँटी हुई है?',
+        options: ['तीन भागों में', 'पाँच भागों में', 'सात भागों में', 'दो भागों में'],
+        answerIndex: 1,
+        explanation: 'चंद्रधर शर्मा गुलेरी की ‘उसने कहा था’ कहानी 5 भागों में विभाजित है (तीन भागों में युद्ध का वर्णन है)।'
+      },
+      {
+        id: 34, section: 'gadya', chapter: 'संपूर्ण क्रांति',
+        question: 'जयप्रकाश नारायण ने ‘संपूर्ण क्रांति’ वाला ऐतिहासिक भाषण कहाँ दिया था?',
+        options: ['दिल्ली के रामलीला मैदान में', 'पटना के गाँधी मैदान में', 'इलाहाबाद में', 'वाराणसी में'],
+        answerIndex: 1,
+        explanation: 'जयप्रकाश नारायण ने 5 जून 1974 को पटना के गाँधी मैदान में ‘संपूर्ण क्रांति’ का भाषण दिया था।'
+      },
+      {
+        id: 35, section: 'gadya', chapter: 'अर्धनारीश्वर',
+        question: '‘अर्धनारीश्वर’ किसका कल्पित रूप है?',
+        options: ['विष्णु और लक्ष्मी का', 'शिव और पार्वती का', 'राम और सीता का', 'कृष्ण और राधा का'],
+        answerIndex: 1,
+        explanation: '‘अर्धनारीश्वर’ शंकर (शिव) और पार्वती का कल्पित रूप है, जिसका आधा अंग पुरुष और आधा नारी का होता है।'
+      },
+      {
+        id: 36, section: 'gadya', chapter: 'शिक्षा',
+        question: '‘शिक्षा’ पाठ के रचयिता जे. कृष्णमूर्ति का पूरा नाम क्या है?',
+        options: ['जगदीश कृष्णमूर्ति', 'जिद्दू कृष्णमूर्ति', 'जयंत कृष्णमूर्ति', 'जवाहर कृष्णमूर्ति'],
+        answerIndex: 1,
+        explanation: 'जे. कृष्णमूर्ति का पूरा नाम जिद्दू कृष्णमूर्ति है।'
+      },
+
+      // --- काव्य खंड (Q37 - Q47) ---
+      {
+        id: 37, section: 'kavya', chapter: 'तुमुल कोलाहल कलह में',
+        question: '‘तुमुल कोलाहल कलह में’ कविता जयशंकर प्रसाद के किस महाकाव्य से ली गई है?',
+        options: ['आँसू', 'कामायनी', 'लहर', 'झरना'],
+        answerIndex: 1,
+        explanation: 'यह गीत जयशंकर प्रसाद के प्रसिद्ध महाकाव्य ‘कामायनी’ के निर्वेद सर्ग से लिया गया है।'
+      },
+      {
+        id: 38, section: 'kavya', chapter: 'पुत्र वियोग',
+        question: '‘खिलौना’ शब्द किस कविता से संबंधित है?',
+        options: ['उषा', 'पुत्र वियोग', 'गाँव का घर', 'अधिनायक'],
+        answerIndex: 1,
+        explanation: 'सुभद्रा कुमारी चौहान की कविता ‘पुत्र वियोग’ में आया है — “मेरा खोया हुआ खिलौना अब तक मेरे पास न आया”।'
+      },
+      {
+        id: 39, section: 'kavya', chapter: 'कड़बक',
+        question: '‘कड़बक’ के कवि मलिक मुहम्मद जायसी किस काव्य-धारा के कवि हैं?',
+        options: ['कृष्णभक्ति शाखा', 'प्रेममार्गी (सूफ़ी) शाखा', 'रामभक्ति शाखा', 'ज्ञानमार्गी शाखा'],
+        answerIndex: 1,
+        explanation: 'मलिक मुहम्मद जायसी निर्गुण भक्ति की प्रेममार्गी (सूफ़ी) शाखा के प्रमुख कवि हैं।'
+      },
+      {
+        id: 40, section: 'kavya', chapter: 'सूरदास के पद',
+        question: '‘सूरदास के पद’ किस भाषा में रचित हैं?',
+        options: ['अवधी', 'ब्रजभाषा', 'खड़ी बोली', 'मैथिली'],
+        answerIndex: 1,
+        explanation: 'सूरदास के सभी पद ब्रजभाषा में रचित हैं।'
+      },
+      {
+        id: 41, section: 'kavya', chapter: 'तुलसीदास के पद',
+        question: '‘हनुमान बाहुक’ को तुलसीदास की किस कृति का एक अंग माना जाता है?',
+        options: ['रामचरितमानस', 'कवितावली', 'विनयपत्रिका', 'गीतावली'],
+        answerIndex: 1,
+        explanation: '‘हनुमान बाहुक’ को गोस्वामी तुलसीदास की कृति ‘कवितावली’ का अंग माना जाता है।'
+      },
+      {
+        id: 42, section: 'kavya', chapter: 'छप्पय',
+        question: '‘छप्पय’ के रचयिता नाभादास किस धारा के कवि थे?',
+        options: ['सगुणोपासक रामभक्त धारा', 'निर्गुण संत धारा', 'रीतिकालीन धारा', 'प्रयोगवादी धारा'],
+        answerIndex: 0,
+        explanation: 'नाभादास सगुणोपासक रामभक्त धारा के प्रमुख कवि थे।'
+      },
+      {
+        id: 43, section: 'kavya', chapter: 'कवित्त',
+        question: 'रीतिकाल के कवि भूषण को ‘भूषण’ की उपाधि किसने दी थी?',
+        options: ['छत्रपति शिवाजी ने', 'राजा रुद्रशाह ने', 'छत्रसाल ने', 'औरंगजेब ने'],
+        answerIndex: 1,
+        explanation: 'चित्रकूट के सोलंकी राजा रुद्रशाह ने उन्हें ‘भूषण’ की उपाधि प्रदान की थी।'
+      },
+      {
+        id: 44, section: 'kavya', chapter: 'उषा',
+        question: '‘उषा’ कविता के कवि शमशेर बहादुर सिंह को हिंदी साहित्य में क्या कहा जाता है?',
+        options: ['कवियों के कवि', 'राष्ट्रकवि', 'लोककवि', 'प्रकृति के सुकुमार कवि'],
+        answerIndex: 0,
+        explanation: 'शमशेर बहादुर सिंह को हिंदी साहित्य में ‘कवियों के कवि’ के रूप में जाना जाता है।'
+      },
+      {
+        id: 45, section: 'kavya', chapter: 'अधिनायक',
+        question: '‘अधिनायक’ कविता में ‘हरचरना’ किसका प्रतीक है?',
+        options: ['सत्ताधारी नेता का', 'आम आदमी का', 'सैनिक का', 'राजा का'],
+        answerIndex: 1,
+        explanation: '‘अधिनायक’ कविता में ‘हरचरना’ भारत के सामान्य, गरीब और आम आदमी का प्रतीक है।'
+      },
+      {
+        id: 46, section: 'kavya', chapter: 'प्यारे नन्हें बेटे को',
+        question: '‘प्यारे नन्हें बेटे को’ कविता में ‘लोहा’ किसका प्रतीक है?',
+        options: ['हथियार का', 'कर्म (परिश्रम) का', 'भय का', 'धन का'],
+        answerIndex: 1,
+        explanation: 'विनोद कुमार शुक्ल की इस कविता में ‘लोहा’ कर्म और परिश्रमशील मानव का प्रतीक है।'
+      },
+      {
+        id: 47, section: 'kavya', chapter: 'गाँव का घर',
+        question: '‘गाँव का घर’ कविता ज्ञानेंद्रपति के किस कविता-संग्रह से ली गई है?',
+        options: ['संशयात्मा', 'गंगातट', 'कवि ने कहा', 'पढ़ते गढ़ते'],
+        answerIndex: 0,
+        explanation: '‘गाँव का घर’ कविता ज्ञानेंद्रपति के साहित्य अकादमी पुरस्कृत संग्रह ‘संशयात्मा’ से ली गई है।'
+      },
+
+      // --- प्रतिपूर्ति (Q48 - Q50) ---
+      {
+        id: 48, section: 'pratipurti', chapter: 'रस्सी का टुकड़ा',
+        question: '‘रस्सी का टुकड़ा’ कहानी के मुख्य पात्र का नाम क्या है?',
+        options: ['मैत्रे होचेकोर्न', 'इवान चेर्व्याकोव', 'ब्रिस्दालोव', 'फ्रांज'],
+        answerIndex: 0,
+        explanation: 'गाइ-डि मोपासाँ की कहानी ‘रस्सी का टुकड़ा’ के मुख्य पात्र मैत्रे होचेकोर्न हैं।'
+      },
+      {
+        id: 49, section: 'pratipurti', chapter: 'क्लर्क की मौत',
+        question: '‘क्लर्क की मौत’ कहानी में क्लर्क का नाम क्या है?',
+        options: ['इवान दमित्रीच चेर्व्याकोव', 'मैत्रे होचेकोर्न', 'ब्रिस्दालोव', 'एंटन'],
+        answerIndex: 0,
+        explanation: 'अंतोन चेखव की कहानी ‘क्लर्क की मौत’ में मुख्य पात्र क्लर्क का नाम इवान दमित्रीच चेर्व्याकोव है।'
+      },
+      {
+        id: 50, section: 'pratipurti', chapter: 'पेशगी',
+        question: '‘पेशगी’ कहानी के लेखक हेनरी लोपेज का जन्म किस देश में हुआ था?',
+        options: ['फ्रांस', 'रूस', 'कांगो (अफ्रीका)', 'इंग्लैंड'],
+        answerIndex: 2,
+        explanation: '‘पेशगी’ के लेखक हेनरी लोपेज का जन्म कांगो (अफ्रीका) में हुआ था।'
+      }
+    ];
+
+    const SECTION_LABELS = {
+      vyakaran: 'व्याकरण',
+      gadya: 'गद्य खंड',
+      kavya: 'काव्य खंड',
+      pratipurti: 'प्रतिपूर्ति'
+    };
+
+    const OPTION_LABELS = ['A', 'B', 'C', 'D'];
+
+    let state = {
+      studentName: '',
+      started: false,
+      answers: {},
+      activeSection: 'all',
+      viewMode: 'single',
+      currentFilteredIndex: 0,
+      mode: 'test',
+      reviewFilter: 'all',
+      secondsRemaining: 50 * 60,
+      timerPaused: false,
+      elapsedSecondsOnSubmit: 0
+    };
+
+    let timerInterval = null;
+
+    const startScreen = document.getElementById('startScreen');
+    const studentNameInput = document.getElementById('studentNameInput');
+    const nameError = document.getElementById('nameError');
+    const startTestBtn = document.getElementById('startTestBtn');
+    const testHeader = document.getElementById('testHeader');
+    const mainContent = document.getElementById('mainContent');
+    const headerStudentMeta = document.getElementById('headerStudentMeta');
+    const scoreStudentNameBadge = document.getElementById('scoreStudentNameBadge');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const timerToggleBtn = document.getElementById('timerToggleBtn');
+    const topActionBtn = document.getElementById('topActionBtn');
+    const progressText = document.getElementById('progressText');
+    const viewToggleGroup = document.getElementById('viewToggleGroup');
+    const modeSingleBtn = document.getElementById('modeSingleBtn');
+    const modeListBtn = document.getElementById('modeListBtn');
+    const resultSection = document.getElementById('resultSection');
+    const singleViewContainer = document.getElementById('singleViewContainer');
+    const listViewContainer = document.getElementById('listViewContainer');
+    const singleQuestionCard = document.getElementById('singleQuestionCard');
+    const paletteGrid = document.getElementById('paletteGrid');
+    const paletteCountLabel = document.getElementById('paletteCountLabel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const clearChoiceBtn = document.getElementById('clearChoiceBtn');
+    const sidebarSubmitBtn = document.getElementById('sidebarSubmitBtn');
+    const retakeBtn = document.getElementById('retakeBtn');
+    const confirmModal = document.getElementById('confirmModal');
+    const modalSummaryText = document.getElementById('modalSummaryText');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
+    const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+
+    function getFilteredQuestions() {
+      let list = QUESTIONS;
+      if (state.activeSection !== 'all') {
+        list = list.filter(q => q.section === state.activeSection);
+      }
+      if (state.mode === 'result' && state.reviewFilter !== 'all') {
+        list = list.filter(q => {
+          const userAns = state.answers[q.id];
+          if (state.reviewFilter === 'correct') return userAns === q.answerIndex;
+          if (state.reviewFilter === 'wrong') return userAns !== undefined && userAns !== q.answerIndex;
+          if (state.reviewFilter === 'skipped') return userAns === undefined;
+          return true;
+        });
+      }
+      return list;
+    }
+
+    function formatTime(totalSec) {
+      const m = Math.floor(totalSec / 60);
+      const s = totalSec % 60;
+      return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (state.mode !== 'test' || state.timerPaused) return;
+        if (state.secondsRemaining > 0) {
+          state.secondsRemaining--;
+          timerDisplay.textContent = formatTime(state.secondsRemaining);
+          if (state.secondsRemaining <= 300) {
+            timerDisplay.classList.add('text-rose-600');
+          }
+        } else {
+          submitTest();
+        }
+      }, 1000);
+    }
+
+    function selectAnswer(qId, optIdx) {
+      if (state.mode !== 'test') return;
+      state.answers[qId] = optIdx;
+      render();
+    }
+
+    function updateProgress() {
+      const solvedCount = Object.keys(state.answers).length;
+      progressText.textContent = `हल किए: ${solvedCount} / ${QUESTIONS.length}`;
+      paletteCountLabel.textContent = `${solvedCount}/${QUESTIONS.length} हल`;
+    }
+
+    function renderSingleView(filtered) {
+      if (filtered.length === 0) {
+        singleQuestionCard.innerHTML = `<p class="text-sm text-slate-500 py-8 text-center">इस खंड में कोई प्रश्न नहीं है।</p>`;
+        return;
+      }
+      if (state.currentFilteredIndex >= filtered.length) {
+        state.currentFilteredIndex = 0;
+      }
+      const q = filtered[state.currentFilteredIndex];
+      const selected = state.answers[q.id];
+
+      const optionsHtml = q.options.map((opt, idx) => {
+        const isSelected = selected === idx;
+        const baseCls = isSelected
+          ? 'border-blue-700 bg-blue-50 text-blue-950 ring-1 ring-blue-700'
+          : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 text-slate-800';
+        const badgeCls = isSelected
+          ? 'bg-blue-800 text-white border-blue-800'
+          : 'bg-slate-100 text-slate-700 border-slate-200';
+        return `
+          <button type="button" data-qid="${q.id}" data-opt="${idx}"
+            class="opt-btn w-full text-left p-3.5 rounded-xl border ${baseCls} flex items-center gap-3 transition cursor-pointer">
+            <span class="w-7 h-7 rounded-lg border ${badgeCls} flex items-center justify-center text-xs font-bold shrink-0">
+              ${OPTION_LABELS[idx]}
+            </span>
+            <span class="text-sm sm:text-base font-medium leading-snug">${opt}</span>
+          </button>
+        `;
+      }).join('');
+
+      singleQuestionCard.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold tabular-nums">
+              प्रश्न ${q.id} / ${QUESTIONS.length}
+            </span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold">
+              ${SECTION_LABELS[q.section]}
+            </span>
+          </div>
+          <span class="text-xs font-medium text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg">
+            टॉपिक: ${q.chapter}
+          </span>
+        </div>
+        <h2 class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed mb-5">${q.question}</h2>
+        <div class="space-y-2.5">${optionsHtml}</div>
+      `;
+
+      prevBtn.disabled = state.currentFilteredIndex === 0;
+      nextBtn.disabled = state.currentFilteredIndex === filtered.length - 1;
+      clearChoiceBtn.disabled = selected === undefined;
+      clearChoiceBtn.classList.toggle('opacity-40', selected === undefined);
+
+      paletteGrid.innerHTML = filtered.map((item, fIdx) => {
+        const isCurrent = fIdx === state.currentFilteredIndex;
+        const isSolved = state.answers[item.id] !== undefined;
+        let cls = 'bg-slate-100 text-slate-700 hover:bg-slate-200';
+        if (isSolved) cls = 'bg-emerald-600 text-white hover:bg-emerald-700';
+        if (isCurrent) cls += ' ring-2 ring-blue-700 ring-offset-1';
+        return `
+          <button type="button" data-fidx="${fIdx}"
+            class="pal-btn h-9 rounded-lg text-xs font-bold tabular-nums transition cursor-pointer ${cls}">
+            ${item.id}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderListView(filtered) {
+      if (filtered.length === 0) {
+        listViewContainer.innerHTML = `
+          <div class="bg-white rounded-2xl border border-slate-200 p-8 text-center text-sm text-slate-500">
+            इस फ़िल्टर में कोई प्रश्न नहीं मिला।
+          </div>
+        `;
+        return;
+      }
+
+      listViewContainer.innerHTML = filtered.map(q => {
+        const userAns = state.answers[q.id];
+        const isResult = state.mode === 'result';
+
+        let statusBadge = '';
+        if (isResult) {
+          if (userAns === q.answerIndex) {
+            statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">सही (+1)</span>`;
+          } else if (userAns === undefined) {
+            statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600">छोड़ा गया (0)</span>`;
+          } else {
+            statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800">गलत (0)</span>`;
+          }
+        }
+
+        const optionsHtml = q.options.map((opt, idx) => {
+          let cls = 'border-slate-200 bg-white text-slate-800';
+          let badgeCls = 'bg-slate-100 text-slate-700 border-slate-200';
+
+          if (isResult) {
+            if (idx === q.answerIndex) {
+              cls = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold';
+              badgeCls = 'bg-emerald-600 text-white border-emerald-600';
+            } else if (userAns === idx && idx !== q.answerIndex) {
+              cls = 'border-rose-400 bg-rose-50 text-rose-950';
+              badgeCls = 'bg-rose-600 text-white border-rose-600';
+            }
+          } else if (userAns === idx) {
+            cls = 'border-blue-700 bg-blue-50 text-blue-950 ring-1 ring-blue-700';
+            badgeCls = 'bg-blue-800 text-white border-blue-800';
+          }
+
+          return `
+            <button type="button" data-qid="${q.id}" data-opt="${idx}" ${isResult ? 'disabled' : ''}
+              class="opt-btn w-full text-left p-3 rounded-xl border ${cls} flex items-center gap-3 transition ${isResult ? 'cursor-default' : 'cursor-pointer hover:bg-slate-50'}">
+              <span class="w-6 h-6 rounded-md border ${badgeCls} flex items-center justify-center text-xs font-bold shrink-0">
+                ${OPTION_LABELS[idx]}
+              </span>
+              <span class="text-sm leading-snug">${opt}</span>
+            </button>
+          `;
+        }).join('');
+
+        const explanationHtml = isResult ? `
+          <div class="mt-3 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-700">
+            <span class="font-bold text-slate-900">व्याख्या:</span> ${q.explanation}
+          </div>
+        ` : '';
+
+        return `
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold tabular-nums">Q.${q.id}</span>
+                <span class="text-xs font-semibold text-slate-500">${SECTION_LABELS[q.section]} • ${q.chapter}</span>
+              </div>
+              ${statusBadge}
+            </div>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-3 leading-relaxed">${q.question}</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">${optionsHtml}</div>
+            ${explanationHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openSubmitModal() {
+      const solvedCount = Object.keys(state.answers).length;
+      modalSummaryText.textContent = `आपने ${QUESTIONS.length} में से ${solvedCount} प्रश्नों के उत्तर दिए हैं। क्या आप टेस्ट समाप्त कर परिणाम देखना चाहते हैं?`;
+      confirmModal.classList.remove('hidden');
+    }
+
+    function submitTest() {
+      confirmModal.classList.add('hidden');
+      state.mode = 'result';
+      state.elapsedSecondsOnSubmit = (50 * 60) - state.secondsRemaining;
+      if (timerInterval) clearInterval(timerInterval);
+
+      let correct = 0;
+      let wrong = 0;
+      let skipped = 0;
+      const secCounts = { vyakaran: 0, gadya: 0, kavya: 0, pratipurti: 0 };
+
+      QUESTIONS.forEach(q => {
+        const ans = state.answers[q.id];
+        if (ans === undefined) {
+          skipped++;
+        } else if (ans === q.answerIndex) {
+          correct++;
+          secCounts[q.section]++;
+        } else {
+          wrong++;
+        }
+      });
+
+      const pct = Math.round((correct / QUESTIONS.length) * 100);
+      scoreStudentNameBadge.textContent = `छात्र: ${state.studentName}`;
+      document.getElementById('scoreHeadline').textContent = `${correct} / ${QUESTIONS.length} अंक`;
+      document.getElementById('scoreSubtext').textContent = `सटीकता: ${pct}% • लिया गया समय: ${formatTime(state.elapsedSecondsOnSubmit)}`;
+      document.getElementById('statCorrect').textContent = correct;
+      document.getElementById('statWrong').textContent = wrong;
+      document.getElementById('statSkipped').textContent = skipped;
+      document.getElementById('statPercent').textContent = `${pct}%`;
+      document.getElementById('secScoreVyakaran').textContent = `${secCounts.vyakaran} / 25`;
+      document.getElementById('secScoreGadya').textContent = `${secCounts.gadya} / 11`;
+      document.getElementById('secScoreKavya').textContent = `${secCounts.kavya} / 11`;
+      document.getElementById('secScorePrati').textContent = `${secCounts.pratipurti} / 3`;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      render();
+    }
+
+    function retakeTest() {
+      state.answers = {};
+      state.mode = 'test';
+      state.activeSection = 'all';
+      state.reviewFilter = 'all';
+      state.currentFilteredIndex = 0;
+      state.secondsRemaining = 50 * 60;
+      state.timerPaused = false;
+      timerDisplay.textContent = formatTime(state.secondsRemaining);
+      timerDisplay.classList.remove('text-rose-600');
+      timerToggleBtn.textContent = 'रोकें';
+      startTimer();
+      render();
+    }
+
+    function render() {
+      updateProgress();
+
+      document.querySelectorAll('.sec-btn').forEach(btn => {
+        const active = btn.dataset.section === state.activeSection;
+        btn.className = active
+          ? 'sec-btn px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-900 text-white transition cursor-pointer whitespace-nowrap'
+          : 'sec-btn px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer whitespace-nowrap';
+      });
+
+      document.querySelectorAll('.rfilter-btn').forEach(btn => {
+        const active = btn.dataset.rfilter === state.reviewFilter;
+        btn.className = active
+          ? 'rfilter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-blue-900 text-white cursor-pointer'
+          : 'rfilter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer';
+      });
+
+      const filtered = getFilteredQuestions();
+
+      if (state.mode === 'result') {
+        resultSection.classList.remove('hidden');
+        singleViewContainer.classList.add('hidden');
+        listViewContainer.classList.remove('hidden');
+        viewToggleGroup.classList.add('hidden');
+        timerToggleBtn.classList.add('hidden');
+        topActionBtn.textContent = 'फिर से टेस्ट दें';
+        renderListView(filtered);
+      } else {
+        resultSection.classList.add('hidden');
+        viewToggleGroup.classList.remove('hidden');
+        timerToggleBtn.classList.remove('hidden');
+        topActionBtn.textContent = 'सबमिट करें';
+
+        if (state.viewMode === 'single') {
+          modeSingleBtn.className = 'px-2 py-1 rounded-md text-xs font-semibold bg-white text-blue-900 shadow-sm cursor-pointer';
+          modeListBtn.className = 'px-2 py-1 rounded-md text-xs font-semibold text-slate-600 hover:text-slate-900 cursor-pointer';
+          singleViewContainer.classList.remove('hidden');
+          listViewContainer.classList.add('hidden');
+          renderSingleView(filtered);
+        } else {
+          modeListBtn.className = 'px-2 py-1 rounded-md text-xs font-semibold bg-white text-blue-900 shadow-sm cursor-pointer';
+          modeSingleBtn.className = 'px-2 py-1 rounded-md text-xs font-semibold text-slate-600 hover:text-slate-900 cursor-pointer';
+          singleViewContainer.classList.add('hidden');
+          listViewContainer.classList.remove('hidden');
+          renderListView(filtered);
+        }
+      }
+    }
+
+    function beginTest() {
+      const nameVal = studentNameInput.value.trim();
+      if (!nameVal) {
+        nameError.classList.remove('hidden');
+        studentNameInput.focus();
+        return;
+      }
+      nameError.classList.add('hidden');
+      state.studentName = nameVal;
+      state.started = true;
+      headerStudentMeta.textContent = `छात्र: ${state.studentName} • Aditya Kumar (50 प्रश्न)`;
+      startScreen.classList.add('hidden');
+      testHeader.classList.remove('hidden');
+      mainContent.classList.remove('hidden');
+      startTimer();
+      render();
+    }
+
+    startTestBtn.addEventListener('click', beginTest);
+    studentNameInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') beginTest();
+    });
+    studentNameInput.addEventListener('input', () => {
+      if (studentNameInput.value.trim()) nameError.classList.add('hidden');
+    });
+
+    document.querySelectorAll('.sec-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.activeSection = btn.dataset.section;
+        state.currentFilteredIndex = 0;
+        render();
+      });
+    });
+
+    document.querySelectorAll('.rfilter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.reviewFilter = btn.dataset.rfilter;
+        render();
+      });
+    });
+
+    modeSingleBtn.addEventListener('click', () => {
+      state.viewMode = 'single';
+      render();
+    });
+
+    modeListBtn.addEventListener('click', () => {
+      state.viewMode = 'list';
+      render();
+    });
+
+    singleQuestionCard.addEventListener('click', (e) => {
+      const btn = e.target.closest('.opt-btn');
+      if (!btn) return;
+      selectAnswer(Number(btn.dataset.qid), Number(btn.dataset.opt));
+    });
+
+    listViewContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('.opt-btn');
+      if (!btn || state.mode !== 'test') return;
+      selectAnswer(Number(btn.dataset.qid), Number(btn.dataset.opt));
+    });
+
+    paletteGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.pal-btn');
+      if (!btn) return;
+      state.currentFilteredIndex = Number(btn.dataset.fidx);
+      render();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (state.currentFilteredIndex > 0) {
+        state.currentFilteredIndex--;
+        render();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const filtered = getFilteredQuestions();
+      if (state.currentFilteredIndex < filtered.length - 1) {
+        state.currentFilteredIndex++;
+        render();
+      }
+    });
+
+    clearChoiceBtn.addEventListener('click', () => {
+      const filtered = getFilteredQuestions();
+      const q = filtered[state.currentFilteredIndex];
+      if (q && state.answers[q.id] !== undefined) {
+        delete state.answers[q.id];
+        render();
+      }
+    });
+
+    timerToggleBtn.addEventListener('click', () => {
+      state.timerPaused = !state.timerPaused;
+      timerToggleBtn.textContent = state.timerPaused ? 'शुरू करें' : 'रोकें';
+    });
+
+    topActionBtn.addEventListener('click', () => {
+      if (state.mode === 'test') openSubmitModal();
+      else retakeTest();
+    });
+
+    sidebarSubmitBtn.addEventListener('click', openSubmitModal);
+    retakeBtn.addEventListener('click', retakeTest);
+    modalCancelBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));
+    modalConfirmBtn.addEventListener('click', submitTest);
+
+    render();
+  </script>
+</body>
+</html>
